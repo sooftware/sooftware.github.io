@@ -10,7 +10,9 @@ tags: open-source
   
 - Fairseq이 0.10.1로 버젼 업그레이드를 하면서 configuration 관리를 Hydra로 하게됨.
 - Fairseq을 실행시키는 command line상에서도, 모델 코드 상에서도 몇 가지 변화가 있음.   
-    
+  
+***  
+  
 ### Creating or migrating components
 
 - 기존 모델 코드는 `add_args()`라는 static method로 config를 관리  
@@ -94,6 +96,8 @@ class TransformerLanguageModel(FairseqLanguageModel):
 
 ```
 - 기존 방법(`add_args()`)은 여전히 서포트 되지만, 이후 언젠가 deprecated 될 것이라고 함.
+  
+*** 
   
 ### Training with `fairseq-hydra-train`
   
