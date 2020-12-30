@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Hydra"
+title: "Fairseq-Hydra"
 date: 2020-12-31 03:15:30 +300
 image: hydra2.png
 tags: open-source
