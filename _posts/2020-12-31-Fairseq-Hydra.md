@@ -14,6 +14,7 @@ tags: open-source
 ### Creating or migrating components
 
 - 기존 모델 코드는 `add_args()`라는 static method로 config를 관리  
+  
 ```python
 @staticmethod
 def add_args(parser):
@@ -31,6 +32,7 @@ def add_args(parser):
 > → 복잡한 모델일수록 더욱 코드 읽기가 어려워짐.
   
 - `@dataclass` 데코레이터를 이용하는 class를 이용하는 방법으로 수정 (Tasks & Models) 
+  
 ```python
 @dataclass
 class Wav2Vec2Config(FairseqDataclass):
@@ -56,6 +58,7 @@ class Wav2Vec2Config(FairseqDataclass):
 > FairseqDataclass를 상속받는 클래스를 정의해서 사용 → [Example](https://github.com/pytorch/fairseq/blob/master/fairseq/models/wav2vec/wav2vec2.py)
 
 - Task Example
+  
 ```python
 @dataclass
 class LanguageModelingConfig(FairseqDataclass):
@@ -72,6 +75,7 @@ class LanguageModelingTask(LegacyFairseqTask):
         ...
 ```
 - Model Example
+  
 ```python
 @dataclass
 class TransformerLanguageModelConfig(FairseqDataclass):
@@ -95,6 +99,7 @@ class TransformerLanguageModel(FairseqLanguageModel):
   
 - configuraion 관리를 hydra로 하기 때문에 기존에 사용했던 `fairseq-train`이 아닌 `fairseq-hydra-train` training  
 - Override default values through command line:
+  
 ```
 $ fairseq-hydra-train \
     distributed_training.distributed_world_size=1 \
@@ -105,13 +110,14 @@ $ fairseq-hydra-train \
     optimization.max_update=5000
 ```
 - Replace bundled configs with an external config:
+  
 ```
 $ fairseq-hydra-train \
     --config-dir /path/to/external/configs \
     --config-name wiki103
 ```
 where /path/to/external/configs/wiki103.yaml contains:
-
+  
 ```yaml
 # @package _group_
 
