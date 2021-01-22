@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Conformer: Convolution-augmented Transformer for Speech Recognition"
-date: 2020-01-23 03:15:30 +300
+date: 2021-01-23 03:15:30 +300
 image: x1.png
 tags: open-source
 ---
