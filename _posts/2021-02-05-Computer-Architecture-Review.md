@@ -1,4 +1,12 @@
-## Computer Architecture 복습
+---
+layout: post
+title: "Computer Architecture Review"
+date: 2021-02-05 03:15:30 +300
+image: 04.jpg
+tags: review
+---
+
+## Computer Architecture Review
   
 오랜만에 컴퓨터 구조에서 배운 내용을 조금 복습해보며 감을 잡기 위함
 
