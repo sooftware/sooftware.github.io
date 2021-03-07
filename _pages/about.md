@@ -8,7 +8,7 @@ permalink: /about/
 
 #### AI Research Engineer ㆍ Software Developer 
   
-Current AI Research Engineer at [Kakao Brain](https://www.kakaobrain.com/). I majored in Electronic & Communication Engineering and minored in Data Science at university. My research interests include technologies for human-machine interaction, such as automatic speech recognition, speech synthesis, and natural language processing. I enjoy software development and sometimes like to write my knowledge or thoughts. I want to be helpful to others through open source. You can check my [github page](http://github.com/sooftware) to see what I am currently up to.
+Current Co-Founder & AI Research Engineer of TUNiB Inc. Former AI Research Engineer at Kakao Brain. I majored in Electronic & Communication Engineering and minored in Data Science at university. My research interests include technologies for human-machine interaction, such as automatic speech recognition, speech synthesis, and natural language processing. I enjoy software development and sometimes like to write my knowledge or thoughts. I want to be helpful to others through open source. You can check my [github page](http://github.com/sooftware) to see what I am currently up to.
   
 ### Education
 **Kwangwoon University**  
