@@ -63,7 +63,7 @@ const About: React.FC = () => (
                 <p>
                   {/* eslint-disable-next-line react/no-unescaped-entities */}
                   Hi, I'm Soohwan Kim. I am the co-founder and A.I. engineer of <a href="http://www.tunib.ai">TUNiB</a>.
-                  On this page, I would like to introduce myself in a free format, not in a hard format like resume. If you want to see my resume, check <a href="https://sooftware.io/resume">here</a>.
+                  On this page, I would like to introduce myself in a free format, not in a hard format like resume. If you want to see my resume, check <a href="https://sooftware.github.io/resume">here</a>.
                 </p>
 
                 <br></br>

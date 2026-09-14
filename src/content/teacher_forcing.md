@@ -11,9 +11,9 @@ draft: false
   
 본 포스팅을 이해하기 위해서는 다음 글에 대한 이해가 선행되는 것이 좋습니다.  
   
-- [RNN (Recurrent Neural Network)](https://sooftware.io/rnn/)                                                    
-- [LSTM & GRU (Long Short Term Memory & Gated Recurrent Unit)](https://sooftware.io/lstm_gru/)
-- [Seq2seq (Sequence to sequence)](https://sooftware.io/seq2seq/)  
+- [RNN (Recurrent Neural Network)](https://sooftware.github.io/rnn/)                                                    
+- [LSTM & GRU (Long Short Term Memory & Gated Recurrent Unit)](https://sooftware.github.io/lstm_gru/)
+- [Seq2seq (Sequence to sequence)](https://sooftware.github.io/seq2seq/)  
   
 ***  
   

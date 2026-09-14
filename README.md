@@ -1,13 +1,13 @@
-# sooftware.io
+# sooftware.github.io
   
-This is my personal blog by react. https://sooftware.io
+This is my personal blog by react. https://sooftware.github.io
     
 ## Get Started
   
 - Clone this project
   
 ```
-$ git clone https://github.com/sooftware/sooftware.io
+$ git clone https://github.com/sooftware/sooftware.github.io
 ```
   
 - If you have no nodejs
@@ -38,6 +38,6 @@ $ npm start
 http://localhost:8000
 ```
   
-## Deploy to Netlify
-  
-<a href="https://app.netlify.com/start/deploy?repository=https://github.com/sooftware/sooftware.io"><img src="https://camo.githubusercontent.com/417d890ba67c98ad5856b715343a61cdbf07d72b9bd5b79dd45d43de634c29ea/68747470733a2f2f7777772e6e65746c6966792e636f6d2f696d672f6465706c6f792f627574746f6e2e737667"></a>
+## Deploy
+
+`main` 브랜치에 push 하면 GitHub Actions(`.github/workflows/deploy.yml`)가 빌드해서 GitHub Pages로 배포합니다.

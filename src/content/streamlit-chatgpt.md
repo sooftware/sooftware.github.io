@@ -19,7 +19,7 @@ excerpt:
 <img width="400" alt="image" src="https://github.com/sooftware/sooftware.io/assets/42150335/134118d0-c4b2-4689-bc85-4c805b8c7154">
 
 
-두 라이브러리 모두 간단하게 웹페이지를 띄울 수 있다는 장점이 있지만, 제 경험상 streamlit으로 코드를 작성했을 때 보다 간편헀던 것 같습니다. 그래서 이번 포스트에서는 streamlit에서 제공하는 **chat_message** 메서드와 OpenAI API를 이용해서 **단 30줄의 코드**로 ChatGPT를 웹페이지에 띄워보려고 합니다! (chat_message 외의 사용법을 알고싶으신 분들은 [이전 streamlit 포스트](https://sooftware.io/streamlit/)를 참고하세요!)
+두 라이브러리 모두 간단하게 웹페이지를 띄울 수 있다는 장점이 있지만, 제 경험상 streamlit으로 코드를 작성했을 때 보다 간편헀던 것 같습니다. 그래서 이번 포스트에서는 streamlit에서 제공하는 **chat_message** 메서드와 OpenAI API를 이용해서 **단 30줄의 코드**로 ChatGPT를 웹페이지에 띄워보려고 합니다! (chat_message 외의 사용법을 알고싶으신 분들은 [이전 streamlit 포스트](https://sooftware.github.io/streamlit/)를 참고하세요!)
 
 ## Installation
 

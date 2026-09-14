@@ -5,7 +5,7 @@ module.exports = {
   siteMetadata: {
     title: 'SOOFTWARE',
     description: 'Toward human-like A.I.',
-    siteUrl: 'https://sooftware.io', // full path to blog - no ending slash
+    siteUrl: 'https://sooftware.github.io', // full path to blog - no ending slash
   },
   mapping: {
     'MarkdownRemark.frontmatter.author': 'AuthorYaml',

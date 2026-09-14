@@ -41,7 +41,7 @@ draft: false
   
 위 이미지는 제 깃허브 프로필을 캡처한 이미지입니다. 지금은 활동이 뜸하지만, 대학생때부터 창업 전까지는 나름 오픈소스 활동을 많이 했었습니다. 튜닙에 있으며 만든 [tunib-electra](https://github.com/tunib-ai/tunib-electra), 카카오브레인 시절 참여한 [pororo](https://github.com/kakaobrain/pororo) 등 회사 소속으로 진행한 프로젝트들도 있고, [openspeech](https://github.com/openspeech-team/openspeech), [kospeech](https://github.com/sooftware/kospeech)와 같이 개인적으로 진행한 프로젝트 등 주로 Speech나 NLP 쪽 프로젝트 위주로 활동을 했습니다. 지금은 Dearmate 서비스에 전력투구하느라 오픈소스 활동이 뜸하지만, 나중에 언젠가는 다시 전처럼 열정적으로 🔥🔥 오픈소스 활동을 하게 될 날이 오지 않을까 싶습니다.
   
-추가로 저에 대해 궁금하신 분들은 제 블로그의 [record](https://sooftware.io/tags/record) 태그의 글들이나, 제 [CV](https://sooftware.io/resume)를 참고해주세요!
+추가로 저에 대해 궁금하신 분들은 제 블로그의 [record](https://sooftware.github.io/tags/record) 태그의 글들이나, 제 [CV](https://sooftware.github.io/resume)를 참고해주세요!
 
 ## 블로그에 어떤 주제의 글을 올리나요?  
   
