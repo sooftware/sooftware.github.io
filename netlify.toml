@@ -1,0 +1,16 @@
+# Netlify는 이제 sooftware.io -> sooftware.github.io 리다이렉트만 담당한다.
+[build]
+  command = "gatsby build"
+  publish = "public"
+
+[[redirects]]
+  from = "https://sooftware.io/*"
+  to = "https://sooftware.github.io/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.sooftware.io/*"
+  to = "https://sooftware.github.io/:splat"
+  status = 301
+  force = true
