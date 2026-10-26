@@ -26,4 +26,4 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-Sitemap: https://sooftware.github.io/sitemap-index.xml
+Sitemap: https://sooftware.github.io/sitemap/sitemap-index.xml
