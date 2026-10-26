@@ -14,6 +14,7 @@ import { SeriesTabs } from '../components/SeriesTabs';
 import { Wrapper } from '../components/Wrapper';
 import IndexLayout from '../layouts';
 import { inner, outer, PostFeed, Posts, SectionTitle, SiteMain, SiteNavMain } from '../styles/shared';
+import { jsonLd, person, website } from '../structured-data';
 import config from '../website-config';
 import { PageContext } from './post';
 
@@ -83,6 +84,9 @@ const IndexPage: React.FC<IndexProps> = props => {
         )}
         <meta property="og:image:width" content={width?.toString()} />
         <meta property="og:image:height" content={height?.toString()} />
+        <script type="application/ld+json">
+          {jsonLd({ '@graph': [website, person] })}
+        </script>
       </Helmet>
       <Wrapper>
         <header css={[outer, SiteNavMain]}>

@@ -13,6 +13,7 @@ import { Wrapper } from '../components/Wrapper';
 import IndexLayout from '../layouts';
 import { colors } from '../styles/colors';
 import { inner, outer, SiteMain, SiteNavMain } from '../styles/shared';
+import { jsonLd, person } from '../structured-data';
 import config from '../website-config';
 import { PostFullHeader, PostFullTitle } from './post';
 
@@ -21,6 +22,9 @@ interface PageTemplateProps {
     markdownRemark: {
       htmlAst: any;
       excerpt: string;
+      fields: {
+        slug: string;
+      };
       frontmatter: {
         title: string;
         image?: any;
@@ -44,6 +48,17 @@ const PageTemplate = ({ data }: PageTemplateProps) => {
           {page.frontmatter.title} - {config.title}
         </title>
         <meta name="description" content={page.excerpt} />
+        {translation && (
+          <link rel="alternate" hrefLang={isEnglish ? 'en' : 'ko'} href={config.siteUrl + page.fields.slug} />
+        )}
+        {translation && (
+          <link rel="alternate" hrefLang={isEnglish ? 'ko' : 'en'} href={config.siteUrl + translation} />
+        )}
+        {translation && (
+          <script type="application/ld+json">
+            {jsonLd({ '@type': 'ProfilePage', url: config.siteUrl + page.fields.slug, mainEntity: person })}
+          </script>
+        )}
       </Helmet>
       <Wrapper css={PageStyles}>
         <header css={[outer, SiteNavMain]}>
@@ -191,6 +206,9 @@ export const query = graphql`
     markdownRemark(fields: { slug: { eq: $slug } }) {
       htmlAst
       excerpt
+      fields {
+        slug
+      }
       frontmatter {
         title
         lang

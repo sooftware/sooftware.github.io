@@ -17,6 +17,7 @@ import { Wrapper } from '../components/Wrapper';
 import IndexLayout from '../layouts';
 import { colors } from '../styles/colors';
 import { inner, outer, SiteMain } from '../styles/shared';
+import { jsonLd, person, website } from '../structured-data';
 import config from '../website-config';
 
 export interface Author {
@@ -167,6 +168,25 @@ const PageTemplate = ({ data, pageContext, location }: PageTemplateProps) => {
         )}
         {width && <meta property="og:image:width" content={width?.toString()} />}
         {height && <meta property="og:image:height" content={height?.toString()} />}
+        <script type="application/ld+json">
+          {jsonLd({
+            '@type': 'BlogPosting',
+            headline: post.frontmatter.title,
+            description: post.frontmatter.excerpt || post.excerpt,
+            datePublished: post.frontmatter.date,
+            dateModified: post.frontmatter.date,
+            url: config.siteUrl + location.pathname,
+            mainEntityOfPage: config.siteUrl + location.pathname,
+            ...(post.frontmatter.image && {
+              image: `${config.siteUrl}${getSrc(post.frontmatter.image)}`,
+            }),
+            ...(post.frontmatter.tags?.length && { keywords: post.frontmatter.tags.join(', ') }),
+            inLanguage: config.lang,
+            author: person,
+            publisher: { '@id': person['@id'] },
+            isPartOf: { '@id': website['@id'] },
+          })}
+        </script>
       </Helmet>
       <Wrapper css={PostTemplate}>
         <header className="site-header">

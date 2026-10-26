@@ -232,3 +232,47 @@ exports.onCreateWebpackConfig = ({ stage, actions }) => {
     });
   }
 };
+
+// llms.txt (https://llmstxt.org): a plain-text map of the blog for AI answer engines.
+exports.onPostBuild = async ({ graphql }) => {
+  const fs = require('fs');
+  const { data } = await graphql(`{
+    site { siteMetadata { title description siteUrl } }
+    allMarkdownRemark(
+      filter: {frontmatter: {draft: {ne: true}, layout: {ne: "page"}}}
+      sort: {fields: [frontmatter___date], order: DESC}
+    ) {
+      nodes {
+        excerpt(pruneLength: 140)
+        fields { slug }
+        frontmatter { title excerpt series }
+      }
+    }
+  }`);
+  const { title, description, siteUrl } = data.site.siteMetadata;
+  const line = node => {
+    const summary = (node.frontmatter.excerpt || node.excerpt).replace(/\s+/g, ' ').trim();
+    return `- [${node.frontmatter.title}](${siteUrl}${node.fields.slug}): ${summary}`;
+  };
+
+  const sections = seriesList
+    .map(series => {
+      const posts = data.allMarkdownRemark.nodes.filter(node => node.frontmatter.series === series.name);
+      return posts.length ? `## ${series.name}\n\n${series.description}\n\n${posts.map(line).join('\n')}` : '';
+    })
+    .filter(Boolean);
+  const others = data.allMarkdownRemark.nodes.filter(
+    node => !seriesList.some(series => series.name === node.frontmatter.series),
+  );
+  if (others.length) {
+    sections.push(`## 기타\n\n${others.map(line).join('\n')}`);
+  }
+
+  const text = [
+    `# ${title}`,
+    `> ${description}. 당근(Karrot) ML Engineer 김수환(Soohwan Kim, sooftware)의 블로그로, 음성인식·자연어처리·LLM·AI 에이전트에 대한 글을 한국어로 씁니다.`,
+    `## 저자\n\n- [About](${siteUrl}/about/): 경력과 프로젝트 소개 (English: ${siteUrl}/about/en/)\n- [GitHub](https://github.com/sooftware)`,
+    ...sections,
+  ].join('\n\n');
+  fs.writeFileSync(path.join(__dirname, 'public', 'llms.txt'), `${text}\n`);
+};
