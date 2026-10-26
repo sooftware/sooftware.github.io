@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
 
+const stripControlChars = text => text.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '');
+
 module.exports = {
   siteMetadata: {
     title: 'SOOFTWARE',
@@ -84,19 +86,22 @@ module.exports = {
         `,
         feeds: [
           {
+            // some posts contain invisible control characters (e.g. backspace) that are invalid in XML
             serialize: ({ query: { site, allMarkdownRemark } }) => allMarkdownRemark.edges.map(edge => ({
               ...edge.node.frontmatter,
-              description: edge.node.excerpt,
+              title: stripControlChars(edge.node.frontmatter.title),
+              description: stripControlChars(edge.node.excerpt),
               date: edge.node.frontmatter.date,
               url: `${site.siteMetadata.siteUrl}${edge.node.fields.slug}`,
               guid: `${site.siteMetadata.siteUrl}${edge.node.fields.slug}`,
-              custom_elements: [{ 'content:encoded': edge.node.html }],
+              custom_elements: [{ 'content:encoded': stripControlChars(edge.node.html) }],
             })),
             query: `
               {
                 allMarkdownRemark(
                   filter: { frontmatter: { draft: { ne: true }, layout: { ne: "page" } } }
                   sort: { order: DESC, fields: [frontmatter___date] },
+                  limit: 30,
                 ) {
                   edges {
                     node {
