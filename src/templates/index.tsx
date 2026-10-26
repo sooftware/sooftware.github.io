@@ -71,6 +71,9 @@ const IndexPage: React.FC<IndexProps> = props => {
         {config.googleSiteVerification && (
           <meta name="google-site-verification" content={config.googleSiteVerification} />
         )}
+        {config.naverSiteVerification && (
+          <meta name="naver-site-verification" content={config.naverSiteVerification} />
+        )}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={config.title} />
         <meta name="twitter:description" content={config.description} />
