@@ -321,7 +321,7 @@ const PostFullTags = styled.section`
   }
 
   a.primary {
-    color: ${colors.accent};
+    color: ${colors.accentInk};
     background: ${colors.accentSoft};
   }
 

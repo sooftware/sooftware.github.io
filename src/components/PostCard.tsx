@@ -92,7 +92,13 @@ const PostCardStyles = css`
   min-width: 0;
 
   :hover .post-card-title {
-    color: ${colors.accent};
+    color: ${colors.accentBright};
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :hover .post-card-title {
+      color: ${colors.darkAccent};
+    }
   }
 
   :hover .post-card-image img {
@@ -202,7 +208,7 @@ const PostCardTags = styled.div`
   }
 
   a.primary {
-    color: ${colors.accent};
+    color: ${colors.accentInk};
     background: ${colors.accentSoft};
   }
 

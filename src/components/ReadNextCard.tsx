@@ -132,12 +132,16 @@ const ReadNextCardContent = styled.div`
   }
 
   li a:hover {
-    color: ${colors.accent};
+    color: ${colors.accentBright};
   }
 
   @media (prefers-color-scheme: dark) {
     li a {
       color: ${colors.darkText};
+    }
+
+    li a:hover {
+      color: ${colors.darkAccent};
     }
   }
 `;
@@ -162,6 +166,12 @@ const ReadNextCardFooter = styled.footer`
   }
 
   a:hover {
-    color: ${colors.accent};
+    color: ${colors.accentBright};
+  }
+
+  @media (prefers-color-scheme: dark) {
+    a:hover {
+      color: ${colors.darkAccent};
+    }
   }
 `;
