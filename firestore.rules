@@ -1,8 +1,10 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    // a Google login; anonymous sessions (used only for likes) do not count
     function signedIn() {
-      return request.auth != null;
+      return request.auth != null
+        && request.auth.token.firebase.sign_in_provider != 'anonymous';
     }
 
     function isAdmin() {
@@ -73,6 +75,18 @@ service cloud.firestore {
         && getAfter(commentPath(post, comment)).data.uid == request.auth.uid;
 
       allow delete: if signedIn() && (resource.data.uid == request.auth.uid || isAdmin());
+    }
+
+    // One like per browser: the doc id is the (usually anonymous) auth uid.
+    match /posts/{post}/likes/{uid} {
+      allow read: if true;
+
+      allow create: if request.auth != null
+        && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['createdAt'])
+        && request.resource.data.createdAt == request.time;
+
+      allow delete: if request.auth != null && request.auth.uid == uid;
     }
 
     // New-comment queue drained by the notifier.

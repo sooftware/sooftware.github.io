@@ -12,6 +12,7 @@ import { Comments } from '../components/Comments';
 import { Footer } from '../components/Footer';
 import SiteNav, { SiteNavMain } from '../components/header/SiteNav';
 import PostContent from '../components/PostContent';
+import { PostLike } from '../components/PostLike';
 import { ReadNext } from '../components/ReadNext';
 import { Subscribe } from '../components/subscribe/Subscribe';
 import { Wrapper } from '../components/Wrapper';
@@ -255,6 +256,7 @@ const PageTemplate = ({ data, pageContext, location }: PageTemplateProps) => {
               {config.showSubscribe && <Subscribe title={config.title} />}
             </article>
 
+            {config.firebase && <PostLike slug={post.fields.slug} />}
             {config.firebase && <Comments slug={post.fields.slug} />}
           </div>
         </main>

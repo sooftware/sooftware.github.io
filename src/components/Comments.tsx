@@ -5,17 +5,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 
 import { colors } from '../styles/colors';
+import { FirebaseModules, loadFirebase, postKey } from '../utils/firebase';
 import config from '../website-config';
 
-import type { Auth, User } from 'firebase/auth';
+import type { User } from 'firebase/auth';
 import type { Firestore } from 'firebase/firestore';
-
-interface FirebaseModules {
-  auth: typeof import('firebase/auth');
-  firestore: typeof import('firebase/firestore');
-  authInstance: Auth;
-  db: Firestore;
-}
 
 interface Comment {
   id: string;
@@ -30,21 +24,6 @@ interface Comment {
 }
 
 const MAX_LENGTH = 2000;
-
-// Firebase is loaded lazily in the browser only, so SSR never touches it.
-const loadFirebase = async (): Promise<FirebaseModules> => {
-  const [{ initializeApp, getApps }, auth, firestore] = await Promise.all([
-    import('firebase/app'),
-    import('firebase/auth'),
-    import('firebase/firestore'),
-  ]);
-  const { apiKey, authDomain, projectId, appId } = config.firebase!;
-  const app = getApps()[0] ?? initializeApp({ apiKey, authDomain, projectId, appId });
-  return { auth, firestore, authInstance: auth.getAuth(app), db: firestore.getFirestore(app) };
-};
-
-// "/kv-cache/" -> "kv-cache"; Firestore doc ids cannot contain "/".
-const postKey = (slug: string) => slug.replace(/^\/+|\/+$/g, '').replace(/\//g, '__') || 'index';
 
 export const Comments: React.FC<{ slug: string }> = ({ slug }) => {
   const fb = useRef<FirebaseModules | null>(null);
@@ -70,7 +49,8 @@ export const Comments: React.FC<{ slug: string }> = ({ slug }) => {
       fb.current = modules;
       setReady(true);
       const { auth, firestore, authInstance, db } = modules;
-      unsubAuth = auth.onAuthStateChanged(authInstance, setUser);
+      // anonymous sessions only exist for likes; they count as signed out here
+      unsubAuth = auth.onAuthStateChanged(authInstance, u => setUser(u && !u.isAnonymous ? u : null));
       unsubComments = firestore.onSnapshot(
         firestore.query(postRef(firestore, db, slug, 'comments'), firestore.orderBy('createdAt', 'asc')),
         snapshot => {

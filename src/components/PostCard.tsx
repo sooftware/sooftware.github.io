@@ -11,6 +11,7 @@ import styled from '@emotion/styled';
 import { colors } from '../styles/colors';
 import { PageContext } from '../templates/post';
 import config from '../website-config';
+import { PostStats } from './PostStats';
 
 export interface PostCardProps {
   post: PageContext;
@@ -62,6 +63,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post, large = false }) => {
           <time dateTime={datetime}>{displayDatetime}</time>
           <span>&middot;</span>
           <span>{post.fields.readingTime.text}</span>
+          <PostStats slug={post.fields.slug} />
         </PostCardMeta>
       </PostCardContent>
       {post.frontmatter.image && (
@@ -266,6 +268,12 @@ const PostCardMeta = styled.footer`
   color: ${colors.faint};
   font-size: 1.4rem;
   font-variant-numeric: tabular-nums;
+
+  .post-card-stat {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+  }
 
   @media (prefers-color-scheme: dark) {
     color: ${colors.darkSubtle};
