@@ -224,11 +224,20 @@ exports.createPages = async ({ graphql, actions }) => {
   });
 };
 
-exports.onCreateWebpackConfig = ({ stage, actions }) => {
+exports.onCreateWebpackConfig = ({ stage, actions, loaders }) => {
   // adds sourcemaps for tsx in dev mode
   if (stage === 'develop' || stage === 'develop-html') {
     actions.setWebpackConfig({
       devtool: 'eval-source-map',
+    });
+  }
+
+  // firebase is only used in the browser (comments); keep its node build out of the SSR bundle
+  if (stage === 'build-html' || stage === 'develop-html') {
+    actions.setWebpackConfig({
+      module: {
+        rules: [{ test: /[\\/]node_modules[\\/](firebase|@firebase)[\\/]/, use: loaders.null() }],
+      },
     });
   }
 };

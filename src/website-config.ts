@@ -78,6 +78,19 @@ export interface WebsiteConfig {
    * Otherwise only shows first (primary) tag
    */
   showAllTags: boolean;
+  /**
+   * Firebase web app config for comments (Google login + Firestore).
+   * These values are public by design; access is enforced by firestore.rules.
+   * Comments are hidden when omitted.
+   */
+  firebase?: {
+    apiKey: string;
+    authDomain: string;
+    projectId: string;
+    appId: string;
+    /** Google account that can read secret comments and delete any comment */
+    adminEmail: string;
+  };
 }
 
 const config: WebsiteConfig = {
@@ -100,6 +113,13 @@ const config: WebsiteConfig = {
   cv: '/cv.pdf',
   cvFileName: 'Soohwan_Kim_CV.pdf',
   series,
+  firebase: {
+    apiKey: 'AIzaSyAyk0cY60QxM_hWLUtIcpCUAzeJPsXwIK4',
+    authDomain: 'sooftware.firebaseapp.com',
+    projectId: 'sooftware',
+    appId: '1:895169768043:web:7aa9626250bd88f2b71f2e',
+    adminEmail: 'sh951011@gmail.com',
+  },
 };
 
 export default config;

@@ -1,0 +1,89 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return signedIn()
+        && request.auth.token.email == 'sh951011@gmail.com'
+        && request.auth.token.email_verified == true;
+    }
+
+    function commentPath(post, id) {
+      return /databases/$(database)/documents/posts/$(post)/comments/$(id);
+    }
+
+    function validText(text) {
+      return text is string && text.size() > 0 && text.size() <= 2000;
+    }
+
+    // Public part of every comment. A secret comment keeps body '' here;
+    // its text lives in secrets/{comment}.
+    match /posts/{post}/comments/{comment} {
+      allow read: if true;
+
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['uid', 'name', 'photoURL', 'body', 'parentId', 'secret', 'createdAt'])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.name is string
+        && request.resource.data.name.size() <= 100
+        && request.resource.data.createdAt == request.time
+        && ((request.resource.data.secret == true
+              && request.resource.data.body == ''
+              && existsAfter(/databases/$(database)/documents/posts/$(post)/secrets/$(comment)))
+            || (request.resource.data.secret == false && validText(request.resource.data.body)))
+        // replies are one level deep
+        && (request.resource.data.parentId == null
+            || (request.resource.data.parentId is string
+                && exists(commentPath(post, request.resource.data.parentId))
+                && get(commentPath(post, request.resource.data.parentId)).data.get('parentId', null) == null))
+        && existsAfter(/databases/$(database)/documents/posts/$(post)/emails/$(comment))
+        && existsAfter(/databases/$(database)/documents/queue/$(post + '__' + comment));
+
+      allow delete: if signedIn() && (resource.data.uid == request.auth.uid || isAdmin());
+    }
+
+    // Secret comment text: readable by the people in `readers` (author, and the
+    // parent comment's author for a reply) and the admin.
+    match /posts/{post}/secrets/{comment} {
+      allow read: if signedIn() && (request.auth.uid in resource.data.readers || isAdmin());
+
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['uid', 'body', 'readers'])
+        && request.resource.data.uid == request.auth.uid
+        && validText(request.resource.data.body)
+        && request.resource.data.readers is list
+        && request.resource.data.readers.size() <= 2
+        && request.auth.uid in request.resource.data.readers
+        && getAfter(commentPath(post, comment)).data.uid == request.auth.uid
+        && getAfter(commentPath(post, comment)).data.secret == true;
+
+      allow delete: if signedIn() && (resource.data.uid == request.auth.uid || isAdmin());
+    }
+
+    // Commenter email for reply notifications. No client can read it;
+    // only the notifier (Apps Script, project owner credentials) does.
+    match /posts/{post}/emails/{comment} {
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['uid', 'email'])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.email == request.auth.token.email
+        && getAfter(commentPath(post, comment)).data.uid == request.auth.uid;
+
+      allow delete: if signedIn() && (resource.data.uid == request.auth.uid || isAdmin());
+    }
+
+    // New-comment queue drained by the notifier.
+    match /queue/{item} {
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['post', 'comment', 'slug', 'createdAt'])
+        && item == request.resource.data.post + '__' + request.resource.data.comment
+        && request.resource.data.slug is string
+        && request.resource.data.slug.size() <= 300
+        && request.resource.data.createdAt == request.time
+        && getAfter(commentPath(request.resource.data.post, request.resource.data.comment)).data.uid == request.auth.uid;
+    }
+  }
+}
