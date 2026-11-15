@@ -4,7 +4,7 @@ author: [Soohwan Kim]
 tags: [Toolkit, review]
 image: img/lmux/lmux-1.png
 date: '2026-11-15T10:00:00.000Z'
-draft: true
+draft: false
 ---
 
 # 터미널이 무거워서 직접 만들었습니다 - lmux 개발/홍보기
